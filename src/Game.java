@@ -13,6 +13,7 @@ public class Game {
         this.name = name;
         this.maxPlayers = maxPlayers;
         players = new ArrayList<>();
+
     }
 
     public void registerPlayers(){
