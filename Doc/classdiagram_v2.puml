@@ -19,7 +19,7 @@ class Game {
 - TextUI ui
 '- FileIO io
 + Game(String name, int maxPlayers)
-- void createPlayer(String name, int score
+- void createPlayer(String name, int score)
 + void registerPlayers()
 '+ void registerPlayers(String path)
 '+ void endSession()

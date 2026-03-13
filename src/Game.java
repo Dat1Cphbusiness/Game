@@ -29,6 +29,7 @@ public class Game {
         Player p = new Player(name, score);
         players.add(p);
     }
+
     public void displayPlayers(){
         for(Player p:players){
             System.out.println(p);
