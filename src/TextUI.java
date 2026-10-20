@@ -1,45 +1,94 @@
-
-
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class TextUI {
+    /*
 
 
-    Scanner sc = new Scanner(System.in);
 
-    public ArrayList<String> promptChoice( ArrayList<String> options, int limit, String msg){
 
-        displayList(options, "");
+' shows the options, promts for choices until limit is reached, and returns the user's choices as a list of Strings
++ ArrayList<String> promptChoice(ArrayList<String> options, int limit, String msg)
 
-        ArrayList<String> choices = new ArrayList<>();  //Lave en beholder til at gemme brugerens valg
 
-        while(choices.size() < limit){             //tjekke om brugeren skal vælge flere drinks
+    */
+    Scanner scan = new Scanner(System.in);
 
-            int choice = promptNumeric(msg);
-            choices.add(options.get(choice-1));
-        }
-        return null;
-    }
-
-    public void displayList(ArrayList<String>list, String msg) {
-        for (int i = 0; i < list.size();i++) {
-            System.out.println(i+1+". "+list.get(i));
-        }
+    public String promptText(String msg){
+        System.out.println(msg);
+        String input  = scan.nextLine();
+        return input;
     }
 
     public int promptNumeric(String msg){
-        System.out.println(msg);//Stille brugeren et spørgsmål
-        String input = sc.nextLine();          //Give brugere et sted at placere sit svar og vente på svaret
-        int numInput = Integer.parseInt(input);       //Konvertere svaret til et tal
-        sc.nextLine();//flush
-        return numInput;
+        System.out.println(msg);
+        int input = 0;
+        try {
+            input = scan.nextInt();
+        }catch (InputMismatchException e){
+            scan.nextLine();
+            System.out.println("Skriv et tal");
+            input = promptNumeric(msg);
+        }
+        return input;
     }
 
-    public String promptText(String msg){
-        System.out.println(msg);//Stille brugeren et spørgsmål
-        String input = sc.nextLine();          //Give brugere et sted at placere sit svar og vente på svaret
+    public void displayList(ArrayList<String> list, String msg, boolean numbered){//parameter der forstæller OM listen er nummereret eller ej.
+        System.out.println(msg);
 
+        for(int i = 0; i< list.size(); i++){
+
+            // String s = numbered?i+1+". "+ list.get(i):list.get(i);
+            String s;
+            if(numbered){
+                s = i+1+". "+ list.get(i);
+
+            }else{
+
+                s = list.get(i);
+            }
+            System.out.println(s);
+        }
+
+       /*
+       int i = 0;
+       for(String s : list){
+            // s = list.get(i);
+            System.out.println(s);
+            i++;
+
+        }
+
+        */
+
+
+
+    }
+
+    public ArrayList<String> promptChoice(ArrayList<String> options, int limit, String msg){
+        ArrayList<String> choices =  new ArrayList<>();
+
+
+        //kør et while loop, så længe limit ikke er nået
+        while(choices.size()<limit ) {
+            int input = this.promptNumeric(msg);
+            if(input > 0 && input <= options.size()) {
+                String choice = options.get(input-1);
+                choices.add(choice);
+            }else{
+                System.out.println("ugyldigt input");
+            }
+
+        }
+
+
+        return choices;
+    }
+
+    public int promptMenuChoice(ArrayList<String> menu, String msg){
+        displayList(menu, msg, true);
+        int input = this.promptNumeric("tast et tal");
         return input;
     }
 }
